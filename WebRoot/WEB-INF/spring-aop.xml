@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+<!--<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://www.springframework.org/schema/jms/ http://www.springframework.org/schema/jms/spring-jms-2.5.xsd">-->
+
+<!--
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jms="http://www.springframework.org/schema/jms"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+-->
+
+
+	<!-- ========================== DATASOURCE CONFIGURATION =============================== -->
+	<!-- OLD comment -->
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/sevencasp"/>
+		<property name="username" value="root"/>
+		<property name="password" value="iamme1234"/>
+		</bean> -->
+
+	<bean id="dataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean"
+		destroy-method="close">
+		<property name="jndiName" value="java:/omototest" />
+	</bean>
+	<!-- =========================== HIBERNATE IMPLEMENTATIONS ========================== -->
+
+	<bean id="dbSessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="configLocation">
+			<value>.\WEB-INF\hibernate.cfg.xml</value>
+		</property>
+		<property name="configurationClass">
+			<value>org.hibernate.cfg.AnnotationConfiguration</value>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.bytecode.provider">javassist</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.cache.use_second_level_cache">
+					false
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="dbSessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="cachedHibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="dbSessionFactory" />
+		</property>
+		<property name="cacheQueries">
+			<value>true</value>
+		</property>
+	</bean>
+
+
+	<!-- =========================== DAO IMPLEMENTATIONS ========================== -->
+
+	<bean id="formResultDAO"
+		class="com.omototest.dao.implementation.FormResultDAO">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>
+	</bean>
+	
+	<bean id="omotoReportDAO"
+		class="com.omototest.dao.implementation.OmotoReportDAO">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>
+	</bean>
+	
+	
+	
+
+	<!-- =========================== DAO IMPLEMENTATIONS END ========================== -->
+	
+	<!-- ======================= JMS IMPLEMENTATIONS START ======================== -->
+		
+	<!-- A JMS connection factory for JBoss JMS -->
+
+	<!--<bean id="connectionFactory" class="org.springframework.jms.connection.SmartConnectionFactory">
+	<property name="brokerURL">
+		<value>tcp://localhost:1099</value>
+	</property>
+	</bean>-->
+	<!-- A POJO that implements the JMS message listener -->
+
+ <!-- <bean id="simpleMessageListener" class="com.omototest.jmsreceiver.JMSReceiver">
+  
+  </bean>-->
+  
+  
+ <!-- <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="connectionFactory"/>
+    <property name="destination" ref="HelloWorldQueue"/>
+    <property name="simpleMessageListener" ref="simpleMessageListener" />
+  </bean>-->
+ 
+	<!-- ======================= JMS IMPLEMENTTIONS END ======================== -->
+
+
+</beans>

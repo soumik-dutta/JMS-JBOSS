@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<project name="omototest" basedir="." default="deploywar">
+
+	<property name="src.dir" value="src"/>
+	<property name="web.dir" value="WebRoot"/>
+	<property name="resources.dir" value="resources"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+	<property name="lib.build.dir" value="${web.dir}/WEB-INF/lib"/>
+	<property name="resource.hibernate.dir" value="${web.dir}/WEB-INF"/>
+
+	<property name="name" value="omototest"/>
+
+	<property name="deploy.path" value="deploy"/>
+
+
+	<path id="master-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+
+	<!-- Hibernate Tools import -->
+	<taskdef name="hibernatetool"
+			 classname="org.hibernate.tool.ant.HibernateToolTask"
+			 classpathref="master-classpath"/>
+
+
+
+	<target name="build"  description="Compile main source tree java files">
+		<mkdir dir="${build.dir}"/>
+
+		<echo message="Building from ${src.dir} to ${build.dir} "/>
+
+		<javac destdir="${build.dir}" debug="true"
+			   classpathref="master-classpath" >
+			<src path="${src.dir}" />
+		</javac>
+	</target>
+
+
+
+	<target name="deploy" depends="build" description="Deploy application">
+		<copy dir="${deploy.path}/${name}" preservelastmodified="true">
+			<fileset dir="${build.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+	</target>
+
+
+	<target name="deploywar" depends="build" description="Deploy application as a WAR file">
+		<delete file="${deploy.path}/${name}.war"/>
+		<mkdir dir="${deploy.path}"/>
+
+		<copy todir="${lib.build.dir}">
+			<fileset dir="${lib.dir}">
+				<include name="spring.jar"/>
+				<include name="hibernate3.jar"/>
+				<include name="dom4j-1.6.1.jar"/>
+				<include name="jta.jar"/>
+				<include name="hibernate-annotations.jar"/>
+				<include name="mysql-connector-java-5.1.6-bin.jar"/>
+				<include name="ejb3-persistence.jar"/>
+				<include name="commons-collections-3.2.1.jar"/>
+				<include name="commons-fileupload.jar"/>
+				<include name="commons-io.jar"/>
+				<include name="struts.jar"/>
+				<include name="uploadbean.jar"/>
+				<include name="activation.jar"/>
+				<include name="mail.jar"/>
+				<include name="log4j.jar"/>
+				<include name="gson-2.3.jar"/>
+				<include name="commons-codec-1.8.jar"/>
+				<include name="itextpdf-5.4.2.jar"/>
+				<include name="commons-email-1.3.1.jar"/>
+				<include name="otter4java-1.0.jar"/>
+
+			</fileset>
+		</copy>
+		<war destfile="${deploy.path}/${name}.war"
+			 webxml="${web.dir}/WEB-INF/web.xml">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+
+		</war>
+	</target>
+
+	<!-- Copy metadata to build classpath -->
+	<target name="copymetafiles">
+
+		<mkdir dir="${build.dir}/META-INF"/>
+		<copy todir="${build.dir}/META-INF">
+			<fileset dir="${resource.hibernate.dir}">
+				<filename name="persistence.xml"/>
+			</fileset>
+		</copy>
+
+	</target>
+
+
+	<!-- Export the database schema -->
+	<target name="create-tables" depends="deploywar,copymetafiles"
+			description="Exports a generated schema to DB and file">
+
+		<hibernatetool  destdir="${basedir}">
+			<classpath path="${build.dir}"/>
+			<jpaconfiguration/> <!-- Use META-INF/persistence.xml -->
+			<hbm2ddl
+					drop="true"
+					create="true"
+					export="false"
+					outputfilename="${name}-ddl.sql"
+					delimiter=";"
+					format="true"/>
+		</hibernatetool>
+	</target>
+
+
+
+</project>

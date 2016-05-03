@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  JBoss Server Configuration                                           -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: crafts4sarees-ds.xml,v 1.1 2010/01/30 07:28:32 smartideas Exp $ -->
+<!-- ==================================================================== -->
+<!--  Datasource config for Oracle originally from Steven Coy             -->
+<!-- ==================================================================== -->
+
+
+<datasources> 
+  <local-tx-datasource>		`
+ 
+    <jndi-name>omototest</jndi-name> 
+    <connection-url>jdbc:mysql://localhost:3306/omoto</connection-url> 
+    <driver-class>com.mysql.jdbc.Driver</driver-class> 
+ 
+   	<user-name>root</user-name> 
+    <password>lkpg363jkw22</password>
+	<min-pool-size>3</min-pool-size>
+    <max-pool-size>6</max-pool-size>
+	<exception-sorter-class-name>
+    	org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter
+    </exception-sorter-class-name>
+ 
+   <!-- <connection-property name="socketFactory">com.mysql.jdbc.NamedPipeSocketFactory</connection-property> -->
+
+    <!-- Typemapping for JBoss 4.0 --> 
+    <metadata> 
+      <type-mapping>mySQL</type-mapping> 
+    </metadata> 
+ 
+  </local-tx-datasource> 
+</datasources> 

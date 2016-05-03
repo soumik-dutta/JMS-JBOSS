@@ -1,0 +1,58 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+   version="1.0">
+
+<!--  This mapping file provided for the hibernateTool facility  -->
+   <persistence-unit name="omototest">
+
+       <!-- The provider only needs to be set if you use several JPA providers
+       <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        -->
+       <!-- This is required to be spec compliant, Hibernate however supports
+            auto-detection even in JSE.-->
+       <class>com.omototest.model.FormResult</class>
+       <class>com.omototest.model.OmotoReport</class>
+       
+       
+        
+      <properties>
+          <!-- Scan for annotated classes and Hibernate mapping XML files -->
+          <property name="hibernate.archive.autodetection" value="class, hbm"/>
+			
+		<!-- Uncomment For DEV-->
+          <property name="hibernate.connection.driver_class"
+                    value="com.mysql.jdbc.Driver"/>
+         <!--  <property name="hibernate.connection.url"
+                    value="jdbc:mysql://localhost:3306/onlineadmissions?autoReconnect=true"/>-->
+          <property name="hibernate.connection.url"
+                    value="jdbc:mysql://localhost:3306/smartideas?autoReconnect=true"/>
+          <!-- <property name="hibernate.connection.username"
+                    value="root"/>
+		  <property name="hibernate.connection.password"
+                    value="iamme1234"/>-->
+           <property name="hibernate.connection.username"
+                    value="smartideas"/>
+		  <property name="hibernate.connection.password"
+                    value="smart543ideas"/>
+                    
+          <property name="hibernate.c3p0.min_size"
+                    value="5"/>
+          <property name="hibernate.c3p0.max_size"
+                    value="20"/>
+          <property name="hibernate.c3p0.timeout"
+                    value="300"/>
+          <property name="hibernate.c3p0.max_statements"
+                    value="50"/>
+          <property name="hibernate.c3p0.idle_test_period"
+                    value="3000"/>
+
+          <property name="hibernate.dialect"
+                    value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+		  <property name="hibernate.cache.use_query_cache" value="true"/>
+                    
+      </properties>
+   </persistence-unit>
+
+</persistence>

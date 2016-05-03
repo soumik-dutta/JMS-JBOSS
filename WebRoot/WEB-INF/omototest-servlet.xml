@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+	<!-- Controller Bean definitions -->
+	<bean id="questionUpdateController"
+		class="com.omototest.controller.QuestionUpdateController">
+		<property name="formResultDAO">
+			<ref bean="formResultDAO" />
+		</property>
+	</bean>
+	
+	<bean id="getFormController"
+		class="com.omototest.controller.GetFormController">
+	</bean>
+	
+	<bean id="loginController"
+		class="com.omototest.controller.LoginController">
+	</bean>
+	
+	<bean id="submitJsonController"
+		class="com.omototest.stubcontroller.SubmitJsonController">
+	</bean>
+	
+	<bean id="sdkInController"
+		class="com.omototest.stubcontroller.SDKInController">
+	</bean>
+	
+	<bean id="sdkOutController"
+		class="com.omototest.stubcontroller.SDKOutController">
+	</bean>
+	
+	<bean id="reportDataController"
+		class="com.omototest.controller.ReportDataController">
+		<property name="omotoReportDAO">
+			<ref bean="omotoReportDAO" />
+		</property>
+	</bean>
+	
+	<bean id="loadReportDataController"
+		class="com.omototest.controller.LoadReportDataController">
+		<property name="omotoReportDAO">
+			<ref bean="omotoReportDAO" />
+		</property>
+	</bean>
+	
+	<bean id="endPointController"
+		class="com.omototest.stubcontroller.EndPointController">
+	</bean>
+	
+	<bean id="registrationController"
+		class="com.omototest.stubcontroller.RegistrationController">
+	</bean>
+	
+	<bean id="signinController"
+		class="com.omototest.stubcontroller.SigninController">
+	</bean>
+	
+	<bean id="sendCampaignJsonController"
+		class="com.omototest.stubcontroller.SendCampaignJsonController">
+	</bean>
+	
+	<bean id="jmsPutController"
+		class="com.omototest.controller.JMSPutController">
+		
+	</bean>
+	<bean id="jmsGetController"
+		class="com.omototest.controller.JMSGetController">
+
+	</bean>
+
+
+	<!-- Controller Bean Mapping -->
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<map>
+
+				<entry key="/reply.htm">
+					<ref bean="questionUpdateController" />
+				</entry>
+				<entry key="/login.htm">
+					<ref bean="loginController" />
+				</entry>
+				<entry key="/getform.htm">
+					<ref bean="getFormController" />
+				</entry>
+				<entry key="/reportdata.htm">
+					<ref bean="reportDataController" />
+				</entry>
+				<entry key="/loadreportdata.htm">
+					<ref bean="loadReportDataController" />
+				</entry>
+				<entry key="/endpoint.htm">
+					<ref bean="endPointController" />
+				</entry>
+				<entry key="/tabsignup.htm">
+					<ref bean="registrationController" />
+				</entry>
+				<entry key="/tabsignin.htm">
+					<ref bean="signinController" />
+				</entry>
+				<entry key="/sendcampaignjson.htm">
+					<ref bean="sendCampaignJsonController" />
+				</entry>
+				<entry key="/submitjson.htm">
+					<ref bean="submitJsonController" />
+				</entry>
+				<entry key="/sdkin.htm">
+					<ref bean="sdkInController" />
+				</entry>
+				<entry key="/sdkout.htm">
+					<ref bean="sdkOutController" />
+				</entry>
+				<entry key="/jmsput.htm">
+					<ref bean="jmsPutController" />
+				</entry>
+				<entry key="/jmsget.htm">
+					<ref bean="jmsGetController" />
+				</entry>
+
+
+			</map>
+		</property>
+	</bean>
+
+	<!-- Controller Bean Mapping End-->
+</beans>
