@@ -29,4 +29,9 @@
 		<location>/pages/error.jsp</location>
 	</error-page>
 
+	<servlet>
+		<servlet-name>JMSinitiator</servlet-name>
+		<servlet-class>com.omototest.servlet.JMSinitiator</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 </web-app>

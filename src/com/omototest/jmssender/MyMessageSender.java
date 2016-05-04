@@ -49,12 +49,17 @@ public class MyMessageSender {
 			System.out.println("message : "+message.toString());
 
 			System.out.println("Create hello world message");
-			Message objMessage = session.createTextMessage("Hello World!");
+			Message objMessage=null;
+			for (int i = 0; i < 100; i++) {
+				objMessage = session.createTextMessage("Hello World! "+(i+1));
+				producer.send(objMessage);
+			}
+
 
 			System.out.println("message send from sender : "+objMessage.toString());
 
 
-			producer.send(objMessage);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
