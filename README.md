@@ -62,3 +62,6 @@ Configuration file for Jboss server [jbossmq-service.xml][jboss_cnf].
 >The message sending part of the queue `HelloWorldQueue`
 
 - - - - -
+
+
+[jboss_cnf]: <https://github.com/soumik-dutta/JMS-JBOSS/blob/master/jbossmq-service.xml>
