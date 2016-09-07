@@ -14,7 +14,7 @@ Configuration file for Jboss server [jbossmq-service.xml][jboss_cnf].
  - `JMSInitiator`- Servlet that triggers the 'MyMessageReceiver' during startup.
  
 ###### MyMessageReceiver.java
-```
+```java
             //get the configuration from the property
 			Context context = ContextUtil.getInitialContext();
 			//get Queue Connection Factory from  jbossmq-service.xml file in jboss
@@ -39,7 +39,7 @@ Configuration file for Jboss server [jbossmq-service.xml][jboss_cnf].
 
 ###### MyMessageSender.java   
 
-```
+```java
         	//get the connection information from the property file
 			Context context = ContextUtil.getInitialContext();
 			//get Queue Connection Factory from  jbossmq-service.xml file in jboss
